@@ -16,5 +16,5 @@ Depth-First Search (DFS).
 Time complexity: O(n + k)
 Space complexity: O(n)
 
-Where n is the number of boxes and k is
-the total number of keys.
+Where n is the number of boxes and k is the
+total number of keys.
