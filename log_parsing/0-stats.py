@@ -6,7 +6,7 @@ import sys
 
 
 def print_stats(total_size, status_counts):
-    """Print the accumulated statistics."""
+    """Print accumulated statistics."""
 
     print("File size: {}".format(total_size))
 
@@ -29,11 +29,11 @@ def main():
 
     total_size = 0
     line_count = 0
+    last_reported = 0
 
     try:
         for line in sys.stdin:
             line_count += 1
-
             match = pattern.match(line.strip())
 
             if match:
@@ -47,8 +47,14 @@ def main():
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
+                last_reported = line_count
 
     except KeyboardInterrupt:
+        if line_count != last_reported:
+            print_stats(total_size, status_counts)
+        return
+
+    if line_count > last_reported:
         print_stats(total_size, status_counts)
 
 
