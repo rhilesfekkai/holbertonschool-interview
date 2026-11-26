@@ -54,7 +54,7 @@ def main():
             print_stats(total_size, status_counts)
         return
 
-    if line_count > last_reported:
+    if line_count > last_reported or line_count == 0:
         print_stats(total_size, status_counts)
 
 
