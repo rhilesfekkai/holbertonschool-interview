@@ -21,7 +21,7 @@ def main():
     pattern = re.compile(
         r'^\S+ - \[[^\]]+\] '
         r'"GET /projects/260 HTTP/1\.1" '
-        r'(\d+) (\d+)$'
+        r'(\S+) (\d+)$'
     )
 
     status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
@@ -37,13 +37,17 @@ def main():
             match = pattern.match(line.strip())
 
             if match:
-                status = int(match.group(1))
+                status_text = match.group(1)
                 file_size = int(match.group(2))
 
                 total_size += file_size
 
-                if status in status_counts:
-                    status_counts[status] += 1
+                try:
+                    status = int(status_text)
+                    if status in status_counts:
+                        status_counts[status] += 1
+                except ValueError:
+                    pass
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
