@@ -23,14 +23,12 @@ request.get(url, { json: true }, (error, response, body) => {
     return;
   }
 
-  function printCharacter(index) {
+  const printCharacter = (index) => {
     if (index >= body.characters.length) {
       return;
     }
 
-    request.get(
-      body.characters[index],
-      { json: true },
+    request.get(body.characters[index], { json: true },
       (err, res, character) => {
         if (err || !res || res.statusCode !== 200 ||
             !character || !character.name) {
@@ -41,9 +39,8 @@ request.get(url, { json: true }, (error, response, body) => {
 
         console.log(character.name);
         printCharacter(index + 1);
-      }
-    );
-  }
+      });
+  };
 
   printCharacter(0);
 });
